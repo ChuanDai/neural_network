@@ -73,7 +73,7 @@ def init_cifar10():
         shutil.unpack_archive(save_file)
 
 
-def load_cifar10(normalize=True, flatten=False, one_hot_label=True, data_batch_number='1'):
+def load_cifar10(normalize=True, flatten=True, one_hot_label=True, data_batch_number='1'):
 
     init_cifar10()
 
