@@ -7,6 +7,7 @@ import os.path
 import pickle
 import numpy as np
 import shutil
+from numpy import array
 
 url_base = 'http://www.cs.utoronto.ca/~kriz/'
 key_file = {
@@ -84,13 +85,16 @@ def load_cifar10(normalize=True, flatten=False, one_hot_label=True, data_batch_n
         test_data_set = pickle.load(fo, encoding='bytes')
     test_data_set = convert_bytes_to_string(test_data_set)
 
+    train_data_set['labels'] = array(train_data_set['labels'])
+    test_data_set['labels'] = array(test_data_set['labels'])
+
     if normalize:
         train_data_set = _normalize(train_data_set)
         test_data_set = _normalize(test_data_set)
 
     if not flatten:
-        train_data_set['data'] = train_data_set['data'].reshape(-1, 1, 32, 32)
-        test_data_set['data'] = test_data_set['data'].reshape(-1, 1, 32, 32)
+        train_data_set['data'] = train_data_set['data'].reshape(-1, 3, 32, 32)
+        test_data_set['data'] = test_data_set['data'].reshape(-1, 3, 32, 32)
 
     if one_hot_label:
         train_data_set['labels'] = _change_one_hot_label(train_data_set['labels'])
